@@ -1,10 +1,10 @@
 ﻿using System;
+using Utils;
 
 namespace Tama
 {
     class Program
     {
-        static int WheelResult;
         static Creature TeachersPet;
         static Creature MirvasPet;
 
@@ -12,9 +12,20 @@ namespace Tama
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            TeachersPet = new Creature();
-            TeachersPet.Name = "Pera";
+            // TeachersPet = new Creature();
+            // TeachersPet.Name = "Pera";
+            // TeachersPet.Health = 100;
+            // TeachersPet.Happines = 100;
+            // TeachersPet.Hunger = 0;
+
+            TeachersPet = new Creature() 
+            { 
+                Name = "Kalle",
+                Health = 100,
+                Happines = 100,
+                Hunger = 0
+            };
+
 
             MirvasPet = new Creature();
             
@@ -22,7 +33,12 @@ namespace Tama
             {
                 PrintMenu();
 
-                TeachersPet.AgePet();
+                var isAlive = TeachersPet.AgePet();
+                if(!isAlive)
+                {
+                    Console.WriteLine("Your pet died!");
+                    IsRunning = false;
+                }
                 //Console.ReadKey();
             }
 
@@ -41,13 +57,13 @@ namespace Tama
             switch(keyInput.Key)
             {
                 case ConsoleKey.D1:
-                TeachersPet.Play(5);
+                TeachersPet.Play(PlayType.Boxing);
                 break;
                 case ConsoleKey.D2:
-                TeachersPet.Play(30);
+                TeachersPet.Play(PlayType.WWE);
                 break;
                 case ConsoleKey.D3:
-                TeachersPet.Play(1);
+                TeachersPet.Play(PlayType.Dancing);
                 break;
                 case ConsoleKey.D0:
                 PrintMenu();
@@ -66,13 +82,13 @@ namespace Tama
             switch(keyInput.Key)
             {
                 case ConsoleKey.D1:
-                TeachersPet.Feed(5);
+                TeachersPet.Feed(FoodType.Candy);
                 break;
                 case ConsoleKey.D2:
-                TeachersPet.Feed(30);
+                TeachersPet.Feed(FoodType.Burger);
                 break;
                 case ConsoleKey.D3:
-                TeachersPet.Feed(1);
+                TeachersPet.Feed(FoodType.Lettuce);
                 break;
                 case ConsoleKey.D0:
                 PrintMenu();
@@ -82,8 +98,9 @@ namespace Tama
         static void PrintMenu()
         {
             Console.Clear();
-            Console.WriteLine("1 - Pet stats");
-            Console.WriteLine("2 - Feed pet");
+            TextUtilities.PrintColoredText("1 - Pet stats\n", ConsoleColor.DarkYellow);
+            //Console.WriteLine("1 - Pet stats");
+            TextUtilities.PrintFestiveText("2 - Feed pet\n", ConsoleColor.DarkGreen, ConsoleColor.DarkRed);
             Console.WriteLine("3 - Play with pet");
             Console.WriteLine("0 - Quit");
             
